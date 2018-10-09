@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发布招聘信息</title>
+</head>
+<script type="application/javascript">
+
+    function username_check(){
+    var username = document.getElementById('username').value;
+    if(!(/^1[34578]\d{9}$/.test(username))){
+        document.getElementById("username").value="输入有错误"
+    }
+}
+
+</script>
+
+<body>
+<form action="/sqlapp/bossproductioncheck/" method="post">
+
+       技术方向:<select name="work">
+                <option value="java">java</option>
+                <option value="python">python</option>
+                <option value="c">c</option>
+                <option value="c++">c++</option>
+                <option value="web">web</option>
+                <option value="bigdata">大数据</option>
+                </select><br>
+        薪资待遇:<input type="text" name="salarytreatment"><br>
+    要求    :<textarea name="demand"></textarea><br>
+    咨询电话:<input id="username" type="text" name="phone" onblur="username_check()"><br>
+        公司名称:<input type="text" name="conpanyname"><br>
+                    <input type="submit" value="提交">
+
+
+
+</form>
+</body>
+</html>

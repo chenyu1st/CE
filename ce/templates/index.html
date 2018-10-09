@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VIP充值</title>
+    <link rel="stylesheet" href="dist/css/bootstrap.css">
+</head>
+<body>
+  <marquee>
+
+		<font>配钥匙</font><br />
+		<font>三元一把</font><br/>
+		<font>十元三把</font><br>
+		<font>您配吗？</font><br />
+		<font>什么？您配？</font><br />
+		<font>您配几把？</font>
+		</marquee>
+  <center>
+    <form action="/page1/" method="POST">
+        {% csrf_token %}
+        <input type="text" name="money">
+        <input type="submit" value="请输入你充值的金额" />
+        <p>开通贵族皇帝首月12万</p>
+        <p>续费只需10万</p>
+        <p>包年100万</p>
+    </form>
+      </center>
+
+<script></script>
+</body>
+</html>

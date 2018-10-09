@@ -1,0 +1,367 @@
+{% load static from  staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>招聘网企业TAB切换企业展示</title>
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"/>
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="{% static 'js/jquery.SuperSlide.2.1.1.js' %}"></script>
+
+    </head>
+    <script type="application/javascript">
+        function one() {
+        window.open("http://127.0.0.1:8000/sqlapp/first/")
+        }
+        function insert(){
+        window.open("http://127.0.0.1:8000/sqlapp/insert")
+        }
+        function boss(){
+        window.open("http://127.0.0.1:8000/sqlapp/bossproduction")
+        }
+        function selectstu(){
+        window.open("http://127.0.0.1:8000/sqlapp/myjianli")
+        }
+         function selectboss(){
+        window.open("http://127.0.0.1:8000/sqlapp/myboss")
+        }
+        function logont(){
+        location="http://127.0.0.1:8000/sqlapp/Loginout/"
+        }
+        function  look(){
+         window.open("http://127.0.0.1:8000/sqlapp/stulist/1")
+        }
+        function vip(){
+        location="http://127.0.0.1:8000/index/"
+        }
+    </script>
+    <body>
+
+        <center>
+        <font style="color:white"> 欢迎{{ black }}</font>
+         {% if v == 1 %}
+            <embed  hidden="true" src="{% static 'import.mp3' %}" loop="loop">
+         {% endif %}
+       <input type="submit" value="注销账号" onclick="logont()">
+       <input type="submit" value="人才市场" onclick="look()">
+       <input type="button" value="添加简历" onclick="insert()">
+       <input type="button" value="发布招聘信息" onclick="boss()">
+       <input type="button" value="查看自己的简历" onclick="selectstu()">
+       <input type="button" value="查看自己的公司招聘信息" onclick="selectboss()">
+       <input type="button" value="充值VIP上头条" onclick="vip()">
+        </center>
+        <div class="set-content">
+            <div style="height: 40px;"></div>
+            <div class="set-title hd">
+                <ul class="clearfix">
+                    <li >北京</li>
+                    <li>上海</li>
+                    <li>杭州</li>
+                    <li>广州</li>
+                    <li>深圳</li>
+                    <li>武汉</li>
+                </ul>
+            </div>
+            <div class="set-middle bd">
+                <ul class="set-middle-item">
+                    <li  class="on">
+                        <div class="set-middle-image">
+                            <img src="/static/images/item001.png" alt="">
+                            <img src="/static/images/item002.png" alt="">
+                            <img src="/static/images/item003.png" alt="">
+                            <img src="/static/images/item004.png" alt="">
+                            <img src="/static/images/item005.png" alt="">
+                            <img src="/static/images/item006.png" alt="">
+                            <img src="/static/images/item007.png" alt="">
+                            <img src="/static/images/item008.png" alt="">
+                        </div>
+                        <div class="set-middle-list">
+                            <ul>
+                                <li>
+                                    <div class="set-ali">阿里巴巴</div>
+                                    <div class="set-java">Java技术专家</div>
+                                    <div class="set-salary">20K - 40K</div>
+                                    <div onclick="one()" class="set-more">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">华为</div>
+                                    <div class="set-java"> 架构师</div>
+                                    <div class="set-salary">25K - 50K</div>
+                                    <div onclick="one()"  class="set-more">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">京东商城</div>
+                                    <div class="set-java">web前端工程师</div>
+                                    <div class="set-salary">20K - 40K</div>
+                                    <div onclick="one()"    class="set-more">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">小米</div>
+                                    <div class="set-java">Java技术专家</div>
+                                    <div class="set-salary">30K - 40K</div>
+                                    <div  onclick="one()"  class="set-more">更多工作</div>
+                                </li>
+                                <li style="border-bottom:none">
+                                    <div class="set-ali">网易</div>
+                                    <div class="set-java">自身IOS开发</div>
+                                    <div class="set-salary">10K - 40K</div>
+                                    <div onclick="one()"    class="set-more">更多工作</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="set-middle-item">
+                    <li >
+                        <div class="set-middle-image">
+                            <img src="/static/images/item009.png" alt="">
+                            <img src="/static/images/item010.png" alt="">
+                            <img src="/static/images/item011.png" alt="">
+                            <img src="/static/images/item012.png" alt="">
+                            <img src="/static/images/item013.png" alt="">
+                            <img src="/static/images/item014.png" alt="">
+                            <img src="/static/images/item015.png" alt="">
+                            <img src="/static/images/item016.png" alt="">
+                        </div>
+                        <div class="set-middle-list">
+                            <ul>
+                                <li>
+                                    <div class="set-ali">优信</div>
+                                    <div class="set-java">Java技术专家</div>
+                                    <div class="set-salary">20K - 40K</div>
+                                    <div class="set-more"  onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">新网银行</div>
+                                    <div class="set-java"> 架构师</div>
+                                    <div class="set-salary">25K - 50K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">宜信</div>
+                                    <div class="set-java">web前端工程师</div>
+                                    <div class="set-salary">20K - 40K</div>
+                                    <div class="set-more"  onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">京东金融</div>
+                                    <div class="set-java">Java技术专家</div>
+                                    <div class="set-salary">30K - 40K</div>
+                                    <div class="set-more"  onclick="one()">更多工作</div>
+                                </li>
+                                <li style="border-bottom:none">
+                                    <div class="set-ali">爱花钱</div>
+                                    <div class="set-java">自身IOS开发</div>
+                                    <div class="set-salary">10K - 40K</div>
+                                    <div class="set-more"  onclick="one()">更多工作</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="set-middle-item">
+                    <li>
+                        <div class="set-middle-image">
+                            <img src="/static/images/item001.png" alt="">
+                            <img src="/static/images/item002.png" alt="">
+                            <img src="/static/images/item003.png" alt="">
+                            <img src="/static/images/item004.png" alt="">
+                            <img src="/static/images/item005.png" alt="">
+                            <img src="/static/images/item006.png" alt="">
+                            <img src="/static/images/item007.png" alt="">
+                            <img src="/static/images/item008.png" alt="">
+                        </div>
+                        <div class="set-middle-list">
+                            <ul>
+                                <li>
+                                    <div class="set-ali">滴滴</div>
+                                    <div class="set-java">python工程师</div>
+                                    <div class="set-salary">20K - 40K</div>
+                                    <div class="set-more"  onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">中兴</div>
+                                    <div class="set-java"> c++架构师</div>
+                                    <div class="set-salary">30K - 50K</div>
+                                    <div class="set-more"  onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">京东商城</div>
+                                    <div class="set-java">web前端工程师</div>
+                                    <div class="set-salary">20K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">小米</div>
+                                    <div class="set-java">Java技术专家</div>
+                                    <div class="set-salary">30K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li style="border-bottom:none">
+                                    <div class="set-ali">网易</div>
+                                    <div class="set-java">自身IOS开发</div>
+                                    <div class="set-salary">10K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="set-middle-item">
+                    <li>
+                        <div class="set-middle-image">
+                            <img src="/static/images/item001.png" alt="">
+                            <img src="/static/images/item002.png" alt="">
+                            <img src="/static/images/item003.png" alt="">
+                            <img src="/static/images/item004.png" alt="">
+                            <img src="/static/images/item005.png" alt="">
+                            <img src="/static/images/item006.png" alt="">
+                            <img src="/static/images/item007.png" alt="">
+                            <img src="/static/images/item008.png" alt="">
+                        </div>
+                        <div class="set-middle-list">
+                            <ul>
+                                <li>
+                                    <div class="set-ali">美团</div>
+                                    <div class="set-java">大数据工程师</div>
+                                    <div class="set-salary">20K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">腾讯</div>
+                                    <div class="set-java"> Java架构师</div>
+                                    <div class="set-salary">25K - 50K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">拼多多</div>
+                                    <div class="set-java">UI设计师</div>
+                                    <div class="set-salary">20K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">vivo</div>
+                                    <div class="set-java">Java技术专家</div>
+                                    <div class="set-salary">30K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li style="border-bottom:none">
+                                    <div class="set-ali">网易</div>
+                                    <div class="set-java">自身IOS开发</div>
+                                    <div class="set-salary">10K - 40K</div>
+                                    <div class="set-more"  onclick="one()">更多工作</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="set-middle-item">
+                    <li>
+                        <div class="set-middle-image">
+                            <img src="/static/images/item001.png" alt="">
+                            <img src="/static/images/item002.png" alt="">
+                            <img src="/static/images/item003.png" alt="">
+                            <img src="/static/images/item004.png" alt="">
+                            <img src="/static/images/item005.png" alt="">
+                            <img src="/static/images/item006.png" alt="">
+                            <img src="/static/images/item007.png" alt="">
+                            <img src="/static/images/item008.png" alt="">
+                        </div>
+                        <div class="set-middle-list">
+                            <ul>
+                                <li>
+                                    <div class="set-ali">爱奇艺</div>
+                                    <div class="set-java">UI设计师</div>
+                                    <div class="set-salary">20K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">高德地图</div>
+                                    <div class="set-java"> 算法工程师</div>
+                                    <div class="set-salary">25K - 50K</div>
+                                    <div class="set-more"  onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">摩拜单车</div>
+                                    <div class="set-java">web前端工程师</div>
+                                    <div class="set-salary">10K - 30K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">中国移动</div>
+                                    <div class="set-java">Java技术专家</div>
+                                    <div class="set-salary">30K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li style="border-bottom:none">
+                                    <div class="set-ali">盛大</div>
+                                    <div class="set-java">c++游戏开发</div>
+                                    <div class="set-salary">10K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="set-middle-item">
+                    <li>
+                        <div class="set-middle-image">
+                            <img src="/static/images/item001.png" alt="">
+                            <img src="/static/images/item002.png" alt="">
+                            <img src="/static/images/item003.png" alt="">
+                            <img src="/static/images/item004.png" alt="">
+                            <img src="/static/images/item005.png" alt="">
+                            <img src="/static/images/item006.png" alt="">
+                            <img src="/static/images/item007.png" alt="">
+                            <img src="/static/images/item008.png" alt="">
+                        </div>
+                        <div class="set-middle-list">
+                            <ul>
+                                <li>
+                                    <div class="set-ali">蚂蚁金融</div>
+                                    <div class="set-java">大数据工程师</div>
+                                    <div class="set-salary">20K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">360</div>
+                                    <div class="set-java"> java架构师</div>
+                                    <div class="set-salary">25K - 50K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">金山软件</div>
+                                    <div class="set-java">web前端工程师</div>
+                                    <div class="set-salary">20K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li>
+                                    <div class="set-ali">苏宁易购</div>
+                                    <div class="set-java">web前端工程师</div>
+                                    <div class="set-salary">30K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                                <li style="border-bottom:none">
+                                    <div class="set-ali">4399</div>
+                                    <div class="set-java">自身IOS开发</div>
+                                    <div class="set-salary">10K - 40K</div>
+                                    <div class="set-more" onclick="one()">更多工作</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!--<script>-->
+            <!--jQuery(".set-content").slide({autoPlay:false,trigger:"click",delayTime:700,pnLoop:false});-->
+        <!--</script>-->
+    </body>
+    <script  >
+            $(".set-content").slide({autoPlay:false,trigger:"click",delayTime:700,pnLoop:false});
+     </script>
+
+
+</html>

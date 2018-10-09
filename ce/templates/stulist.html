@@ -1,0 +1,48 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>照片浏览</title>
+</head>
+<script>
+    function jump () {
+        pnum=document.getElementById("pn").value
+        if(pnum>{{ pnums }}){
+            alert("你是不是傻")
+            document.getElementById("pn").value={{ pnum }}
+        }else{
+            location="http://127.0.0.1:8000/sqlapp/stulist/"+pnum+"/"
+        }
+
+    }
+    function tiaozhuan(stu){
+       window.open('/sqlapp/jianli'+'?'+'name'+'='+stu.src)
+    }
+
+</script>
+<body>
+
+{% for stu in sslist %}
+     <img style="height: 200px;width: 160px  " src="{% static  stu %} "onclick="tiaozhuan(this)">
+{% endfor %}
+<br>
+{% if pnum == 1 %}
+    <font>首页</font>
+    <font>上一页</font>
+    {% else %}
+    <a href="/sqlapp/stulist/1/">首页</a>
+    <a href="/sqlapp/stulist/{{ pnum|add:"-1" }}/">上一页</a>
+{% endif %}
+<input id="pn" style="width: 20px" type="text" value="{{ pnum }}">/{{ pnums }}
+<input type="button" value="跳转" onclick="jump()">
+{% if pnum == pnums %}
+    <font>下一页</font>
+    <font>尾页</font>
+    {% else %}
+    <a href="/sqlapp/stulist/{{ pnum|add:"1" }}/">下一页</a>
+    <a href="/sqlapp/stulist/{{ pnums }}/">尾页</a>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% load static from  staticfiles  %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的公司信息</title>
+</head>
+<body>
+    {%for term  in  mess%}
+    <p  > 技术方向:{{term.title}}</p>
+    <p  > 薪资待遇:{{term.salarytreatment}}</p>
+    <p  > 技术要求:{{term.demand}}</p>
+    <p  > 公司名称:{{ term.conpanyname}}</p>
+    <p >联系方式:{{ term.number }}</p>
+    <p   >申请的员工电话:{{ term.snum}}</p>
+    {% endfor %}
+</body>
+</html>
