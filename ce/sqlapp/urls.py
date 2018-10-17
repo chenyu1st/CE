@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^main/', views.main),
     url(r'^myjianli/',views.myjianli),
     url(r'^myboss/',views.myboss),
+
 ]

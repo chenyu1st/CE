@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+			$("#p1").click(function(){
+				$.ajax({
+					type:"post",
+					url:"/myapp/111/",
+					data:{"data":"cy"},
+					datatype:"json",
+					success:function(response){
+
+						i=response["datas"]
+						j=response["status"]
+						doccument.getelement("p1").innerHTML=j
+					}
+				});
+			})
+		})
+    </script>
+</head>
+<body>
+<p id="p1" >123</p>
+</body>
+</html>

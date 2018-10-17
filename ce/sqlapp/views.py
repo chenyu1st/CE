@@ -29,7 +29,7 @@ def Login(request):
         return render(request, 'best.html', {"black": black})
     # 如果没有
     else:
-        black = username
+
         return render(request,"Login.html",{"black":black})
 def Loginout(request):
         response = HttpResponseRedirect('/sqlapp/Login/')
@@ -38,6 +38,7 @@ def Loginout(request):
         return response
 def check(request):
     #接值
+    global black
     username=request.GET.get("name")
     password=request.GET.get("pwd")
     password1=password[0:-1]
@@ -53,6 +54,7 @@ def check(request):
             return HttpResponse("密码不正确")
         else:
             black = username
+
         #将用户的username和password放入cookie，这样下次别人就不用登录了
             res=render(request, 'best.html', {"black": black})
             res.set_cookie("NXusername",username,max_age=60000)
@@ -107,9 +109,12 @@ def jianli(request):
     stu2 = st[55:]
     print(stu2)
     stu4 = st[29:]
+    print("stu4="+stu4)
     stu3 = stu.objects.filter(stunumber__exact=stu2).values()
     return render(request, 'jianli.html', {"stu3": stu3, "stu4": stu4,"black":black})
 def best(request,username):
+    black=username
+    print("black"+black)
     return render(request,"best.html",{'username':username,"black":black})
 def find(request,mess):
     word=["java","c++","c","bigdata","大数据","web","python"]
