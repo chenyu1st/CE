@@ -1,11 +1,3 @@
-# 招聘网
-
-运行方法：python manage.py runserver
-
-使用到的技术: django框架 python mysql
-
-作者：陈宇
-
 ### 1.linux系统安装python3.6.4
 
 ##### 1.安装依赖环境
@@ -271,36 +263,97 @@ python manage.py runserver 0.0.0:8000
 
 http://123.206.94.211:8000/sqlapp/Login/（123.206.94.211对应你的云服务器ip地址 8000是端口号 sqlapp/Login/是你的网页url）
 
-### 6.安装 Nginx
+### 6.安装 Nginx和uwsgi
 
-##### 1.通过 yum 安装 Nginx
+##### 1.通过 yum 安装 Nginx（用这种方法高效并且系统给你配置了一定的环境）
 
-`yum install nginx -y`
+`yum install -y nginx `
 
-##### 2.启动 Nginx 服务
+##### 2.安装 uwsgi
 
-`systemctl start nginx`
+`pip install uwsgi`
 
-访问下面的链接，可以看到 nginx 的欢迎界面
-<http://119.29.60.230/>
+##### 3.进入项目ce
 
-### 7.安装 uwsgi
+创建文件夹script
 
-##### 1.安装 uwsgi
+ `mkdir script`
 
-pip install uwsgi
+##### 4.(创建)配置uwsgi.ini
 
-### 8.让 Nginx，uwsgi，Django 协同工作
+`vim script/uwsgi.ini`
+
+
+
+```
+# myweb_uwsgi.ini file
+[uwsgi]
+
+# Django-related settings
+
+socket = 127.0.0.1:8000(不要改成0.0.0.0：8000)
+#真实服务的端口
+
+# Django项目根目录 (绝对路径)
+chdir           = /root/myproject/CE/ce
+
+# wsgi.py文件在项目中的位置
+module          = ce.wsgi
+
+# process-related settings
+# master
+master          = true
+#指定静态文件
+static-map=/static=/root/myproject/CE/ce/static
+# 启动uwsgi的用户名和用户组
+uid=root
+gid=root
+# 启用主进程
+master=true
+# 运行的进程数
+processes=4
+pidfile=/root/myproject/CE/ce/script/uwsgi.pid
+enable-threads=true
+
+#disable-logging：不记录请求信息的日志，只记录错误以及uwsgi内部消息到日志中，如果不开启这一项，日志就会出现大量的请求记录 
+diable-logging=true
+# ... with appropriate permissions - may be needed
+chmod-socket    = 664
+# clear environment on exit
+vacuum          = true
+daemonize = /root/myproject/CE/ce/script/uwsgi.log
+```
+
+##### 5.保存文件并运行
+
+开启uwsgi服务`uwsgi --ini script/uwsgi.ini`
+
+ps:结束uwsgi服务是 `uwsgi --stop script/uwsgi.pid`
+
+​    重启uwsgi服务是 `uwsgi --reload script/uwsgi.pid`
+
+##### 6.查看uwsgi是否配置成功
+
+`netstat -tlnp`查看8000端口是否有uwsgi
+
+### 7.让 Nginx，uwsgi，Django 协同工作
 
 ##### 1.修改 Nginx 配置文件
 
-- 编辑 /etc/nginx/nginx.conf
+- `vim /etc/nginx/nginx.conf`
+- 修改文件如下:
+
+```
+# For more information on configuration, see:
+#   * Official English Documentation: http://nginx.org/en/docs/
+#   * Official Russian Documentation: http://nginx.org/ru/docs/
 
 user nginx;
 worker_processes auto;
 error_log /var/log/nginx/error.log;
 pid /run/nginx.pid;
 
+# Load dynamic modules. See /usr/share/nginx/README.dynamic.
 include /usr/share/nginx/modules/*.conf;
 
 events {
@@ -312,80 +365,161 @@ http {
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
 
-```
-access_log  /var/log/nginx/access.log  main;
+    access_log  /var/log/nginx/access.log  main;
 
-sendfile            on;
-tcp_nopush          on;
-tcp_nodelay         on;
-keepalive_timeout   65;
-types_hash_max_size 2048;
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 2048;
 
-include             /etc/nginx/mime.types;
-default_type        application/octet-stream;
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
 
-# Load modular configuration files from the /etc/nginx/conf.d directory.
-# See http://nginx.org/en/docs/ngx_core_module.html#include
-# for more information.
-include /etc/nginx/conf.d/*.conf;
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
 
-server {
-    listen       80 default_server;
-    listen       [::]:80 default_server;
-    server_name  _;
-    root         /usr/share/nginx/html;
+    server {
+        listen       80 default_server;
+        listen       [::]:80 default_server;
+        server_name  _;
+        root         /usr/share/nginx/html;
 
-    # Load configuration files for the default server block.
-    include /etc/nginx/default.d/*.conf;
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
 
-    location / {
-        include uwsgi_params;
-        uwsgi_pass 127.0.0.1:8000;
+        location / {
+        }
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
     }
 
-    error_page 404 /404.html;
-        location = /40x.html {
+    server {
+   listen 80;
+   server_name 123.206.94.211 itrugod.com;# 我要访问的网站
+
+   location / {
+      rewrite ^/(.*) http://www.itrugod.com/$1 permanent;# 重写我要访问的网站 即输入上方的server_name可跳转http://www.itrugod.com
+   }
     }
 
-    error_page 500 502 503 504 /50x.html;
-        location = /50x.html {
+
+    server {
+        listen 80; # 我要监听那个端口
+   server_name www.itrugod.com; # 你访问的路径前面的url名称
+   charset utf-8; # Nginx编码
+   gzip_types text/plain application/x-javascript text/css text/javascript application/x-httpd-php application/json text/json image/jpeg image/gif image/png application/octet-stream; # 支持压缩的类型
+
+   # 指定项目路径uwsgi
+   location / { # 这个location就和咱们Django的url(r'^admin/', admin.site.urls),
+      include uwsgi_params; # 导入一个Nginx模块他是用来和uWSGI进行通讯的
+      uwsgi_connect_timeout 30; # 设置连接uWSGI超时时间
+      uwsgi_pass 127.0.0.1:8000;
+   }
+
+   # 指定静态文件路径
+   location /static/ {
+      alias /root/myproject/CE/ce/static/;
+      index index.html index.htm;
+   }
     }
+
+
+# Settings for a TLS enabled server.
+#
+#    server {
+#        listen       443 ssl http2 default_server;
+#        listen       [::]:443 ssl http2 default_server;
+#        server_name  _;
+#        root         /usr/share/nginx/html;
+#
+#        ssl_certificate "/etc/pki/nginx/server.crt";
+#        ssl_certificate_key "/etc/pki/nginx/private/server.key";
+#        ssl_session_cache shared:SSL:1m;
+#        ssl_session_timeout  10m;
+#        ssl_ciphers HIGH:!aNULL:!MD5;
+#        ssl_prefer_server_ciphers on;
+#
+#        # Load configuration files for the default server block.
+#        include /etc/nginx/default.d/*.conf;
+#
+#        location / {
+#        }
+#
+#        error_page 404 /404.html;
+#            location = /40x.html {
+#        }
+#
+#        error_page 500 502 503 504 /50x.html;
+#            location = /50x.html {
+#        }
+#    }
+
 }
 ```
 
+##### 2.验证配置文件是否正确
+
+`nginx -t`
+
+看到显示：nginx.conf syntax is ok
+
+nginx.conf test is successful
+
+即配置文件正确
+
+##### 3.设置root权限
+
+ `chmod o+rx /root`
+
+##### 4.开启（重启）nginx
+
+ `systemctl restart nginx`
+
+##### 5.查看nginx状态
+
+`ps -ef|grep nginx`
+
+### 8.修改django项目中的路径
+
+##### 1.templates里的路径都不能写绝对路径
+
+把所有页面的绝对路径改成相对路径
+
+例如：
+
+```
+function boss(){
+window.open("http://127.0.0.1:8000/sqlapp/bossproduction")
 }
+```
 
+改成
 
+```
+function boss(){
+window.open("/sqlapp/bossproduction")
+}
+```
 
-##### 2.重启 Nginx
+##### 2.修改大url（ce里面的url 不是sqlapp里面的）
 
-`/usr/sbin/nginx -s reload`
+添加一条url
 
-##### 3.创建 uwsgi 配置文件
+```
+url(r'^$', views.main),
+```
 
-请在 `/data/mysite` 目录下创建 uwsgi.ini，参考下面的内容。
+作为网页的主页：nginx中的配置
 
-uwsgi.ini文件里的内容如下
+server_name www.itrugod.com;
 
-[uwsgi]
-socket = 127.0.0.1:8000
-chdir = /data/mysite
-wsgi-file = mysite/wsgi.py
-processes = 4
-threads = 2
-stats = 127.0.0.1:9191
-uid = nobody
-gid = nobody
-master = true
-harakiri = 30
-daemonize = /data/mysite/uwsgi.log
-plugins = python
-
-
-
-##### 4.启动 uwsgi
-
-`uwsgi uwsgi.ini`
-
-
-
+用正则改出来的url 即www.itrugod.com可以访问main函数跳转到main.html
