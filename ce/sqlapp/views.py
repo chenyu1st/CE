@@ -89,10 +89,14 @@ def stuinsert(request):
        stuyz=stuyz,stuaddress=stuaddress,
        stugrjs=stugrjs,bnum="/").save()
     f = request.FILES["upimage"]
-    f2 = open(os.path.join(os.path.join(static,"jl"), str(stunumber)), "wb")
-    f2.write(f.read())
-    f2.close()
-    return HttpResponse("简历上传成功")
+    print(str(f)[-4:])
+    if str(f)[-4:] in [".jpg",".png"]:
+        f2 = open(os.path.join(os.path.join(static,"jl"), str(stunumber)+str(f)[-4:]), "wb")
+        f2.write(f.read())
+        f2.close()
+        return HttpResponse("简历上传成功")
+    else:
+        return HttpResponse("简历上传失败，请查看是否你的图片格式存在问题")
 def stulist(request,pagenum):
     albumname = os.listdir(os.path.join(static,"jl"))
     stulist=[]
@@ -102,11 +106,19 @@ def stulist(request,pagenum):
     pnums=pi.num_pages #总页数
     page=pi.page(pagenum)
     pnum=page.number #当前页
-    sslist=page.object_list
+    sslist =[]
+    slist=page.object_list
+    print(slist)
+    for i in slist:
+        j=i[23:]
+        print(j)
+        sslist.append(j)
+    print(sslist)
     return  render(request,'stulist.html',{'sslist':sslist,'pnum':pnum,'pnums':pnums,"pagenum":pagenum,"black":black})
 def jianli(request):
     st = request.GET.get('name')
-    stu2 = st[55:]
+    print(st)
+    stu2 = st[32:]
     print(stu2)
     stu4 = st[29:]
     print("stu4="+stu4)
